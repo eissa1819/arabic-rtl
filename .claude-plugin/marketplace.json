@@ -1,0 +1,5 @@
+{
+  "name": "arabic-rtl-local",
+  "owner": { "name": "local" },
+  "plugins": [{ "name": "arabic-rtl", "source": "./", "description": "يعرض الرسائل العربية في المحادثة من اليمين لليسار" }]
+}

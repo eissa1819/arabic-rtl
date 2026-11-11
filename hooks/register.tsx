@@ -18,6 +18,8 @@ function iso(text: string): string {
   return text.replace(LTR_RUN, run => `${LRI}${run}${PDI}`)
 }
 
+/** Background of the user's message bubble: translucent grey. */
+const BUBBLE = '#8080801f'
 const FENCE = /^\s*(```|~~~)/
 const INLINE = /(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\))/g
 
@@ -141,13 +143,21 @@ export const register: Register = on => {
     const p = e.props
     if (p.task || p.from || !isArabic(p.text)) return next(e)
     const k = $.ui.resolve(e) as unknown as Kit
+    const lines = p.text.split('\n').map((l, i) =>
+      l.trim() === '' ? <k.Text key={`u${i}`}> </k.Text>
+      : HAS_ARABIC.test(l) ? row(k, `u${i}`, iso(l))
+      : <k.Box key={`u${i}`} alignSelf="flex-start"><k.Text>{l}</k.Text></k.Box>
+    )
+    // The terminal draws no bubble behind a prompt; elsewhere the engine's row
+    // has one, so ours gets a soft grey bubble too (works in light and dark).
+    if (e.surface === 'terminal') {
+      return <k.Box flexDirection="column" width="100%" alignItems="flex-end">{lines}</k.Box>
+    }
     return (
       <k.Box flexDirection="column" width="100%" alignItems="flex-end">
-        {p.text.split('\n').map((l, i) =>
-          l.trim() === '' ? <k.Text key={`u${i}`}> </k.Text>
-          : HAS_ARABIC.test(l) ? row(k, `u${i}`, iso(l))
-          : <k.Box key={`u${i}`} alignSelf="flex-start"><k.Text>{l}</k.Text></k.Box>
-        )}
+        <k.Box flexDirection="column" alignItems="flex-end" backgroundColor={BUBBLE} borderStyle="round" borderColor={BUBBLE} paddingX="md" paddingY="sm">
+          {lines}
+        </k.Box>
       </k.Box>
     )
   })

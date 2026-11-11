@@ -8,10 +8,10 @@
 
 ## التثبيت
 
-هذا مستودع خاص: لازم يكون عندك صلاحية قراءة عليه، وتكون مسجّل دخول في GitHub على الجهاز
-(مثلاً `gh auth login` ثم `gh auth setup-git`).
+الأسهل من تطبيق Claude على سطح المكتب: افتح تبويب **Code**، اضغط **+** جنب خانة الكتابة،
+بعدين **Plugins**، بعدين **Add marketplace** واكتب `eissa1819/arabic-rtl`، بعدين **Add plugin**.
 
-من جلسة Claude Code في الطرفية (Terminal):
+أو من جلسة Claude Code في الطرفية (Terminal):
 
 ```
 /plugin install arabic-rtl --marketplace eissa1819/arabic-rtl
@@ -24,5 +24,3 @@
 ```bash
 claude plugin install arabic-rtl --marketplace eissa1819/arabic-rtl
 ```
-
-في تطبيق Claude على سطح المكتب: اضغط + جنب خانة الكتابة، بعدين Plugins، بعدين Add marketplace واكتب `eissa1819/arabic-rtl`، بعدين Add plugin.
